@@ -4,11 +4,202 @@
 <head>
     <meta charset="UTF-8">
 </head>
+<style>
+    body {
+        background-color: antiquewhite;
+    }
+
+    /* General Reset */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+
+    .video-nav {
+        display: inline-block;
+        margin: 0 10px;
+        padding: 8px 16px;
+        background-color: #52d189;
+        color: white;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        user-select: none;
+        margin-bottom: 20px;
+    }
+
+    .video-nav:hover {
+        background-color: #f2f5f3;
+        color: #52d189;
+        border: 1px solid #52d189;
+        transform: scale(1.05);
+    }
+
+
+    /* Search Dropdown */
+    .searchlist {
+
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        margin: 20px auto;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background: #f8f8f8;
+        appearance: none;
+        outline: none;
+        transition: border 0.3s ease;
+    }
+
+    .searchlist:focus {
+        border-color: #007BFF;
+    }
+
+    .newdospeed {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+
+    }
+
+    /* Navigation Menu */
+    nav {
+        background-color: #3ea6ff45;
+        border-radius: 16px;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 800px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        list-style: none;
+        justify-content: center;
+    }
+
+    /* Buttons */
+    nav ul li {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    nav ul li:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    /* Video Select Dropdown */
+    .ytMovie {
+        padding: 10px;
+        font-size: 14px;
+        border: 2px solid #007BFF;
+        border-radius: 8px;
+        background: white;
+    }
+
+    /* Speed Form */
+    #doSpeed {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+
+
+    }
+
+    #doSpeed input[type="radio"] {
+        accent-color: #007BFF;
+    }
+
+    #doSpeed label {
+        font-size: 14px;
+        color: #333;
+    }
+
+    /* video to center */
+    #player {
+        display: block;
+        margin: 20px auto;
+        /* Center horizontally and add some spacing */
+        width: 840px;
+        height: 560px;
+    }
+
+
+    /* Style the search input */
+    #ytSearch {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background: #f8f8f8;
+        margin-right: 10px;
+        transition: border 0.3s ease;
+    }
+
+    /* Change border color on focus */
+    #ytSearch:focus {
+        border-color: #007BFF;
+        outline: none;
+    }
+
+    /* Style the search button */
+    #searchBtn {
+        padding: 10px 20px;
+        background-color: #d4c51c;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Hover effect for the button */
+    #searchBtn:hover {
+        background-color: #f2f5f3;
+        color: #e4c331;
+        border: 1px solid #e4c331;
+
+    }
+</style>
+
 
 <body>
+
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <!-- 1. ここの<div>タグがYoutubeの<iframe>に置き換わる。 -->
     <div id="player"></div>
+
+
+
+    <li id="prevVideo" class="video-nav">← 前へ</li>
+    <li id="nextVideo" class="video-nav">次へ →</li>
+
+
+    <form>
+        <input type="search" id="ytSearch" value="TRiDENT" />
+        <button id="searchBtn">検索</button>
+    </form>
+    <!-- <select class="searchlist"></select> -->
     <nav>
         <ul>
             <li id="doplay">再生</li>
@@ -17,30 +208,35 @@
             <li id="mute">ミュート</li>
             <li id="do10sNext">10秒先へ</li>
             <li id="do10sPrev">10秒戻る</li>
-            <li>
-                <select id="MovieId" class="ytMovie" name="ytMovie">
-                    <option selected>選択してください。</option>
-                    <option value="bjN-3EyXNyE">TRiDENT『Alive』MV</option>
-                    <option value="We__CnrYa9U">TRiDENT『DISTINATION』</option>
-                    <option value="I6ld4ecEp7s">TRiDENT『IMAGINATION』MV</option>
-                    <option value="azQVVhMUz58">TRiDENT『Continue』MV【exガールズロックバンド革命】</option>
-                </select>
-            </li>
 
-            <li>
-                <form id="doSpeed">
-                    <input type="radio" id="mslow" name="speed" value="0.25" />
-                    <label for="mslow">0.25</label>
-                    <input type="radio" id="slow" name="speed" value="0.5" />
-                    <label for="slow">0.5</label>
-                    <input type="radio" id="normal" name="speed" value="1.0" checked />
-                    <label for="normal">1</label>
-                    <input type="radio" id="hspeed" name="speed" value="1.5" />
-                    <label for="hspeed">1.5</label>
-                    <input type="radio" id="mhspeed" name="speed" value="2" />
-                    <label for="mhspeed">2</label>
-                </form>
-            </li>
+
+            <div class="newdospeed">
+                <li>
+                    <select id="MovieId" class="ytMovie" name="ytMovie">
+                        <option selected>選択してください。</option>
+                        <option value="_e4gsaifp58">
+                            Beautiful Ramen Master | Japanese street food</option>
+                        <option value="sOVfH_IzyuM">Japanese Onigiri Rice Ball Restaurant | Yamataro</option>
+                        <option value="WX_hutEWG64">Popular Okonomiyaki Restaurant in Osaka</option>
+                        <option value="xo5LlARMQDU">The Most Giant Pork Cutlet Bowl in Japan</option>
+                    </select>
+                </li>
+                <li>
+                    <form id="doSpeed">
+                        <input type="radio" id="mslow" name="speed" value="0.25" />
+                        <label for="mslow">0.25</label>
+                        <input type="radio" id="slow" name="speed" value="0.5" />
+                        <label for="slow">0.5</label>
+                        <input type="radio" id="normal" name="speed" value="1.0" checked />
+                        <label for="normal">1</label>
+                        <input type="radio" id="hspeed" name="speed" value="1.5" />
+                        <label for="hspeed">1.5</label>
+                        <input type="radio" id="mhspeed" name="speed" value="2" />
+                        <label for="mhspeed">2</label>
+                    </form>
+                </li>
+            </div>
+
         </ul>
     </nav>
     <label>ボリューム<input type="range" min="0" max="100" name="volume" id="volume" value="50" />
@@ -51,8 +247,49 @@
 
 
 
-        // 2. This code loads the IFrame Player API code asynchronously.
-        // 2. 変数tagにscriptタグを作って入れる。Element=要素、Attrubute=属性
+
+        const videoSelect = document.getElementById('MovieId');
+        const nextBtn = document.getElementById('nextVideo');
+        const prevBtn = document.getElementById('prevVideo');
+
+        // Load video by selected index
+        function loadVideoByIndex(index) {
+            const option = videoSelect.options[index];
+            if (option && option.value !== "選択してください。") {
+                videoSelect.selectedIndex = index;
+                player.loadVideoById(option.value);
+            }
+        }
+
+        // Next button event
+        nextBtn.addEventListener('click', function () {
+            let currentIndex = videoSelect.selectedIndex;
+            if (currentIndex < videoSelect.options.length - 1) {
+                loadVideoByIndex(currentIndex + 1);
+            }
+        });
+
+        // Previous button event
+        prevBtn.addEventListener('click', function () {
+            let currentIndex = videoSelect.selectedIndex;
+            if (currentIndex > 1) { // index 0 is "選択してください。"
+                loadVideoByIndex(currentIndex - 1);
+            }
+        });
+
+        // Also handle when user selects a video manually
+        videoSelect.addEventListener('change', function () {
+            const selectedValue = this.value;
+            if (selectedValue !== "選択してください。") {
+                player.loadVideoById(selectedValue);
+            }
+        });
+
+
+
+
+
+
         var tag = document.createElement('script');
 
         tag.src = 'https://www.youtube.com/iframe_api';
@@ -65,7 +302,7 @@
         //3.　APIのコードを読み込んでから、この関数を<iframe>内に影響させる。
         let player;
 
-        let youtubeId = 'UP1zTP5qcfw';
+        let youtubeId = '_e4gsaifp58';
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
@@ -227,15 +464,6 @@
             onYouTubeIframeAPIReady();
         });
 
-        // //jQuery利用時の動画切り替えイベント
-        // $('#MovieId').on('change', function () {
-        //     youtubeId = $(this).val();
-        //     //プレイヤー削除
-        //     player.destroy();
-        //     onYouTubeIframeAPIReady();
-        // });
-
-
         //再生スピード関数
         function playSpeed(num) {
             //setPlaybackRateが再生スピードをセットするメソッド
@@ -243,7 +471,7 @@
             player.setPlaybackRate(num);
             player.playVideo();
         }
-
+        const selectvideo = document.querySelector(".searchlist");
         //再生スピードイベント
         let speedBtn = document.querySelector('#doSpeed');
         speedBtn.addEventListener('change', function () {
@@ -251,22 +479,54 @@
             playSpeed(parseFloat(speedBtn.speed.value));
         });
 
+        function ytSearch(val) {
+            const key = 'AIzaSyCHuXvy3T4aQGUYIuxUHMrvUoFi-KeP3_k'; //自分のキーに書き換えます。
+            const num = 10;
+            const part = 'snippet';
+            const type = 'video';
+            const query = val;
+            fetch(
+                `https://www.googleapis.com/youtube/v3/search?type=${type}&part=${part}&maxResults=${num}&key=${key}&q=${query}&playsinline=1`
+            )
+                .then((data) => data.json())
+                .then((obj) => {
+                    for (let movie of obj["items"]) {
+                        //各videoIdとタイトルを取得して変数に代入
+                        const ytId = movie["id"]["videoId"];
+                        const ytTitle = movie["snippet"]["title"];
+                        const optionTag = document.createElement('option');
+                        optionTag.textContent = ytTitle;
+                        optionTag.setAttribute('value', ytId);
+                        selectvideo.appendChild(optionTag);
+
+                    }
+
+                })
+        };
+
+
+        document.body.addEventListener("click", function () {
+            ytSearch("HIKAKIN");
+        })
 
 
 
+        const ytSearchBtn = document.querySelector('#searchBtn');
+        ytSearchBtn.addEventListener('click', function (e) {
+            const ytSearchVal = document.querySelector('#ytSearch').value;
+            console.log(ytSearchVal); //検索フォームの値を取得
+            ytSearch(ytSearchs);
+
+            e.preventDefault(); //検索ボタンの送信をストップしておく。
 
 
-
-
-
-
-
-
-
+        });
 
 
 
     </script>
+
+
     <div id="player"></div>
     <!-- 動画が表示されている<div>の下に追加 -->
 
